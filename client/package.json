@@ -1,0 +1,27 @@
+{
+  "name": "IOSR-Slideshows",
+  "version": "0.0.0",
+  "description": "",
+  "main": "app/app.js",
+  "dependencies": {
+    "karma": "^0.12.31"
+  },
+  "devDependencies": {
+    "jasmine-core": "^2.2.0",
+    "karma-jasmine": "^0.3.5",
+    "karma-phantomjs-launcher": "^0.1.4"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mmateja/iosr-slideshows"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mmateja/iosr-slideshows/issues"
+  },
+  "homepage": "https://github.com/mmateja/iosr-slideshows"
+}

@@ -1,6 +1,6 @@
 var app = angular.module('slideshows');
 
-app.controller('editorController', ['$scope', '$resource', function($scope, $resource) {
+app.controller('editorController', ['$scope', '$resource', function ($scope, $resource) {
     var s = Snap("#presentation-window");
     var circle = s.circle(150, 150, 100);
     circle.attr({

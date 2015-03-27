@@ -1,5 +1,8 @@
 # bower dependencies
 app/bower_components/
 
+# NodeJS dependencies
+node_modules/
+
 # WebStorm files
 .idea/
