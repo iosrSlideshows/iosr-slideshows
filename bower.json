@@ -1,10 +1,8 @@
 {
   "name": "IOSR-Slideshows",
+  "description"  : "Application for creating slideshows in web browser",
   "version": "0.0.0",
   "homepage": "https://github.com/mmateja/iosr-slideshows",
-  "authors": [
-    "Marek Mateja <matejowy@gmail.com>"
-  ],
   "ignore": [
     "**/.*",
     "node_modules",

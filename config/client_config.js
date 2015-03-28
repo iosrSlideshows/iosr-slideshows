@@ -1,5 +1,5 @@
 module.exports = {
 
-	directory: '/client/app'
+	directory: '/app/'
 
 }
