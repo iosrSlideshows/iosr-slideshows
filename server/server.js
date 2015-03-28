@@ -3,8 +3,7 @@ var app      = express();
 var mongoose = require('mongoose'); 	
 
 var database = require('./config/db_config'); 
-var server = require('./config/server_config'); 
-var client = require('./config/client_config');
+var server = require('./config/server_config');
 
 var morgan = require('morgan'); 		
 var bodyParser = require('body-parser'); 
@@ -13,11 +12,13 @@ var methodOverride = require('method-override');
 var port  	 = server.port;
 var restApiSpecFile = server.apiSpecFile;
 
-var clientDir = client.directory;
+mongoose.connect(database.url, function(err){
+	if(err){
+		console.log(err);
+	}
+}); 	
 
-mongoose.connect(database.url); 	
-
-app.use(express.static(__dirname + clientDir)); 	
+app.use(express.static(server.staticDirectory)); 	
 
 app.use(morgan('dev')); 										
 app.use(bodyParser.urlencoded({'extended':'true'})); 			
