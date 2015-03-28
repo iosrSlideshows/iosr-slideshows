@@ -1,0 +1,21 @@
+<div>
+
+	<div>
+		<div>Slideshows list</div>
+		<div ng-bind="slideshows"></div> 
+	</div>
+
+	<form ng-submit="createSlideshow()">
+		<span>Dodaj pokaz</span>
+		<textarea ng-model="newSlideBody"></textarea>
+		<input type="submit" value="Submit"></form>
+	</form>
+
+
+	<form ng-submit="deleteSlideshow()">
+		<span>Usun pokaz</span>
+		<input ng-model="slideId">
+		<input type="submit" value="Submit">
+	</form>
+
+</div>
