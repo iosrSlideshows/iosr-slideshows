@@ -12,6 +12,12 @@
 			<a class="navbar-brand" href="#">Slideshows</a>
 		</div>
 
+		<form class="navbar-form navbar-left">
+			<div class="form-group">
+				<input type="text" class="form-control" placeholder="Document name">
+			</div>
+		</form>
+
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
@@ -46,5 +52,15 @@
 </nav>
 
 <div ng-controller="editorController">
-    <svg id="presentation-window"></svg>
+	<div class="row">
+		<div id="thumbnails" class="col-md-2">
+			<div ng-repeat="thumbnail in thumbnails" class="thumbnail">{{ thumbnail.title }}</div>
+		</div>
+		<div id="presentation-frame" class="col-md-8">
+			<svg id="presentation-window"></svg>
+		</div>
+		<div class="col-md-2">
+			Tools?
+		</div>
+	</div>
 </div>
