@@ -21,7 +21,20 @@ app.factory('slideCreator', function() {
 			console.debug("Drawing 'circle'");
 
 			var circle = svg.circle(contentObject.position.x, contentObject.position.y, contentObject.radius);
+			circle.attr({
+				"fill" : contentObject.color
+			});
 			circle.drag();
+		},
+		'line': function(svg, contentObject) {
+			console.debug("Drawing 'line'");
+
+			var line = svg.line(contentObject.begin.x, contentObject.begin.y, contentObject.end.x, contentObject.end.y);
+			line.attr({
+				"stroke-width" : 5,
+				"stroke": contentObject.color
+			});
+			line.drag();
 		}
 	};
 

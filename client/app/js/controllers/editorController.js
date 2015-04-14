@@ -34,7 +34,20 @@ app.controller('editorController', ['$scope', '$resource', 'slideCreator', funct
 							"x": 100,
 							"y": 200
 						},
-						"radius": 100
+						"radius": 10,
+						"color": "#FCF"
+					},
+					{
+						"type": "line",
+						"begin": {
+							"x": 100,
+							"y": 100
+						},
+						"end": {
+							"x": 200,
+							"y": 200
+						},
+						"color": "#ACF"
 					}
 				]
 			},
