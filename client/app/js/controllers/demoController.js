@@ -1,38 +1,43 @@
 var app = angular.module('slideshows');
 
-app.controller('demoController', ['$scope', '$log', 'sliServerService', function($scope, $log, sliServerService) {
+app.controller('demoController', ['$scope', '$log', 'restApiService', function($scope, $log, restApiService) {
    
+	$scope.slideshowsString;
+	$scope.selectedSlideshowString;
 	$scope.slideshows;
 
 	function getSlideshows(){
-		sliServerService.getSlideshows().then(function(response){
-			if(!response.data.error){
-				$scope.slideshows = JSON.stringify(response.data ,null,"    ");
-			} else {
-				$log.error(response.data.error);
+		restApiService.getSlideshows().then(function(response){
+			if(response.success){
+				$scope.slideshowsString = JSON.stringify(response.data ,null,"    ");
+				$scope.slideshows = response.data;
 			}
 		});
 	}
 
 	$scope.createSlideshow = function(){
-		sliServerService.createSlideshow($scope.newSlideBody).then(function(response){
-			if(!response.data.error){
+		restApiService.createSlideshow($scope.newSlideBody).then(function(response){
+			if(response.success){
 				getSlideshows();
-			} else {
-				$log.error(response.data.error);
 			}
 		})
 	};
 
 	$scope.deleteSlideshow = function(){
-		sliServerService.deleteSlideshow($scope.slideId).then(function(response){
-			if(!response.data.error){
+		restApiService.deleteSlideshow($scope.slideId).then(function(response){
+			if(response.success){
 				getSlideshows();
-			} else {
-				$log.error(response.data.error);
 			}
 		});
 	};
+
+	$scope.onSlideshowSelected = function(id){
+		restApiService.getSlideshow(id).then(function(response){
+			if(response.success){
+				$scope.selectedSlideshow = JSON.stringify(response.data);
+			}
+		});
+	}
 
 	getSlideshows();
 

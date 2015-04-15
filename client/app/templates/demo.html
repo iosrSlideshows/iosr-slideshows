@@ -2,7 +2,7 @@
 
 	<div>
 		<div>Slideshows list</div>
-		<div ng-bind="slideshows"></div> 
+		<div ng-bind="slideshowsString"></div> 
 	</div>
 
 	<form ng-submit="createSlideshow()">
@@ -17,5 +17,21 @@
 		<input ng-model="slideId">
 		<input type="submit" value="Submit">
 	</form>
+
+	<div style="margin-top : 50px;">
+		<h1>TO SO TWOJE PREZENTACJE. KLIKNIJ ZEBY ZOBACZYC SZCZEGOLY</h1>
+
+		<div style="width:20%; float:left">
+			<div ng-repeat="slideshow in slideshows track by $index">
+				<button type="button" ng-click="onSlideshowSelected(slideshow._id)">
+					{{slideshow.document_name}}
+				</button>
+			</div>
+		</div>
+
+		<div ng-bind="selectedSlideshow">
+		</div>
+
+	</div>
 
 </div>
