@@ -10,9 +10,9 @@ app.controller('editorController', ['$scope', '$resource', 'slideCreator', funct
 				"content": [
 					{
 						"type": "text-field",
-						"text": "Slajd 1",
+						"text": "Piękna prezentacja",
 						"position": {
-							"x": 100,
+							"x": 400,
 							"y": 200
 						}
 					},
