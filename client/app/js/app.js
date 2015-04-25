@@ -18,6 +18,16 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
             templateUrl: "templates/login.html",
             controller: "loginController"
         })
+        .state('slideshows', {
+            url: "/slideshows",
+            templateUrl: "templates/slideshows.html",
+            controller: "slideshowsController"
+        })
+        .state('slideshow', {
+            url: "/slideshow/{documentId}",
+            templateUrl: "templates/editor.html"
+        })
+        // TODO: this probably will be removed
         .state('editor', {
             url: "/editor",
             templateUrl: "templates/editor.html"
