@@ -14,7 +14,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($s
             templateUrl: "templates/home.html"
         })
         .state('login', {
-            url: "/login",
+            url: "/login?success",
             templateUrl: "templates/login.html",
             controller: "loginController"
         })
@@ -55,6 +55,7 @@ app.constant('httpStatusCode', {
     CREATED : 201,
     NO_CONTENT : 204,
 
+    UNAUTHORIZED : 401,
     NOT_FOUND : 404 
 });
 
@@ -71,7 +72,6 @@ app.service('httpInterceptor', function($q, $rootScope, httpStatusCode) {
 
         'response': function(response) {
             if(response.data.error){
-                $rootScope.$emit('dbError', response.data.error)
                 console.error('dbError: ' + response.data.error);
                 return $q.reject(response.data.error);
             }
@@ -83,7 +83,6 @@ app.service('httpInterceptor', function($q, $rootScope, httpStatusCode) {
 
         'responseError': function(rejection) {
             //do obsluzenia rozne rejection.code ???
-            $rootScope.$emit('serverError', rejection.data);
             console.error('serverError: ' + rejection.data);
             return $q.reject(rejection.data);
         }

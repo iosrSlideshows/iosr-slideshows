@@ -86,7 +86,7 @@ module.exports = function(app, logger, passport){
 
 	app.get('/slideshows/:slideshow_id', function(req, res){
 
-		model.Slideshow.find({ _id : req.params.slideshow_id }).populate('slides').populate('content').exec(function(err, slide){
+		model.Slideshow.findOne({ _id : req.params.slideshow_id }).populate('slides').populate('content').exec(function(err, slide){
             if(err) {
                 res.status(404).json(err.message);
             } else {
@@ -98,12 +98,28 @@ module.exports = function(app, logger, passport){
 
     app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
 
-    app.get('/auth/google/callback', passport.authenticate('google'), function(req, res) {
-        res.status(200).json(
-            {
-                name: req.user.name,
-                email : req.user.email
-            });
+    app.get('/auth/google/callback',
+        passport.authenticate('google', {
+            successRedirect : '/#/login?success=true',
+            failureRedirect : '/#/login?success=false'
+        })
+    );
+
+    app.get('/logout', function(req, res) {
+        req.logout();
+    });
+
+    app.get('/profile', function(req, res) {
+        var user = getUser(req);
+        if(user) {
+            res.status(200).json(
+                {
+                    name: user.name,
+                    email: user.email
+                });
+        } else {
+            res.status(401).json("User not logged in");
+        }
     });
 
 }

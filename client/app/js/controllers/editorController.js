@@ -8,10 +8,8 @@ app.controller('editorController', ['$scope', '$stateParams', 'restApiService', 
 		console.debug("Document: " + $stateParams.documentId);
 
 		restApiService.getSlideshow($stateParams.documentId).then(function(response){
-			if(response.success){
-				doc = response.data;
-				slideCreator.create("#presentation-window", doc.slides[0]);
-			}
+            doc = response;
+            slideCreator.create("#presentation-window", doc.slides[0]);
 		});
 	} else {
 		console.debug("No document parameter - creating new presentation");

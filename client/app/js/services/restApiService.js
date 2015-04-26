@@ -94,7 +94,15 @@ app.service('restApiService', [ '$http', 'dbMockService', 'config', 'modes', '$q
 
 		getSlideshow : function(id) {
 			return $http.get('/slideshows/' + id);
-		}
+		},
+
+        logout : function() {
+            return $http.get('/logout');
+        },
+
+        getUserProfile : function() {
+            return $http.get('/profile');
+        }
 	}
 
 	if(config.mode === modes.DEV) {

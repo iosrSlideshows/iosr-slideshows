@@ -1,15 +1,25 @@
 var app = angular.module('slideshows');
 
-app.controller('loginController', ['$scope', 'sessionService', '$resource', function ($scope, sessionService, $resource) {
-    var data = $resource('_slideshow.json');
-    //data.get({}, function (data) {
-    //    $scope.content = data;
-    //});
-	$scope.content = sessionService.loggedIn();
-    //var json = JSON.parse(jsonContent);
-    //$scope.content = json;
-	$scope.login = function () {
-		sessionService.begin();
-		$scope.content = sessionService.loggedIn();
-	}
+app.controller('loginController', ['$scope', 'authService', '$stateParams', '$state', function ($scope, authService, $stateParams, $state) {
+
+    $scope.isLoggedIn = authService.isAuthorized();
+    if($scope.isLoggedIn) {
+        $scope.user = authService.getUser();
+    }
+
+    if($stateParams.success != null) {
+        if($stateParams.success){
+            authService.initialize().then(function(user){
+                $scope.isLoggedIn = true;
+                $scope.user = user;
+            });
+        } else {
+            alert("Login failure");
+        }
+    }
+
+    $scope.back = function(){
+        $state.go('home')
+    };
+
 }]);
