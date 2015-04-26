@@ -4,6 +4,20 @@ var app = angular.module('slideshows');
 app.factory('slideCreator', function() {
 	var creator = {};
 
+	var x, y;
+
+	var dragMoveFunc = function (dx, dy) {
+		this.attr({
+			x: +x+dx,
+			y: +y+dy
+		});
+	};
+
+	var dragStartFunc = function() {
+		x = this.attr("x");
+		y = this.attr("y");
+	};
+
 	var typeObjectCreators = {
 		'text-field': function(svg, contentObject) {
 			console.debug("Drawing 'text-field'");
@@ -15,7 +29,16 @@ app.factory('slideCreator', function() {
 			console.debug("Drawing 'image'");
 
 			var image = svg.image(contentObject.url, contentObject.position.x, contentObject.position.y, contentObject.size.width, contentObject.size.height);
-			image.drag();
+			image.drag(dragMoveFunc, dragStartFunc, function() {
+				contentObject.position.x = +this.attr("x");
+				contentObject.position.y = +this.attr("y");
+				console.debug("Moved to new position: (" + this.attr("x") + "," + this.attr("y") + ")");
+			});
+
+			// TODO: delete, another approach:
+			//eve.on("snap.drag.end." + image.id, function () {
+			//	console.log("aksjdhsakjdhaskjdahkdjshdakjsdhkd");
+			//});
 		},
 		'circle': function(svg, contentObject) {
 			console.debug("Drawing 'circle'");

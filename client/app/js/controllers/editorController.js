@@ -1,94 +1,23 @@
 var app = angular.module('slideshows');
 
-app.controller('editorController', ['$scope', '$resource', 'slideCreator', function ($scope, $resource, slideCreator) {
+app.controller('editorController', ['$scope', '$stateParams', 'restApiService', 'slideCreator', function ($scope, $stateParams, restApiService, slideCreator) {
 
-	// sample presentation JSON
-	// in future will be downloaded from server
-	var doc = {
-		slides: [
-			{
-				"content": [
-					{
-						"type": "text-field",
-						"text": "Slajd 1",
-						"position": {
-							"x": 100,
-							"y": 200
-						}
-					},
-					{
-						"type": "image",
-						"url": "http://static.polskieradio.pl/7abdaaa9-1928-403d-a1ec-a913249edffe.file",
-						"size": {
-							"width": 200,
-							"height": 100
-						},
-						"position": {
-							"x": 400,
-							"y": 200
-						}
-					},
-					{
-						"type": "circle",
-						"position": {
-							"x": 100,
-							"y": 200
-						},
-						"radius": 10,
-						"color": "#FCF"
-					},
-					{
-						"type": "line",
-						"begin": {
-							"x": 100,
-							"y": 100
-						},
-						"end": {
-							"x": 200,
-							"y": 200
-						},
-						"color": "#ACF"
-					}
-				]
-			},
-			{
-				"content": [
-					{
-						"type": "text-field",
-						"text": "Slajd 2",
-						"position": {
-							"x": 100,
-							"y": 200
-						}
-					}
-				]
-			},
-			{
-				"content": [
-					{
-						"type": "text-field",
-						"text": "Slajd 3",
-						"position": {
-							"x": 100,
-							"y": 200
-						}
-					}
-				]
-			},
-			{
-				"content": [
-					{
-						"type": "text-field",
-						"text": "Slajd 4",
-						"position": {
-							"x": 100,
-							"y": 200
-						}
-					}
-				]
+	var doc;
+
+	if($stateParams.documentId) {
+		console.debug("Document: " + $stateParams.documentId);
+
+		restApiService.getSlideshow($stateParams.documentId).then(function(response){
+			if(response.success){
+				doc = response.data;
+				slideCreator.create("#presentation-window", doc.slides[0]);
 			}
-		]
-	};
+		});
+	} else {
+		console.debug("No document parameter - creating new presentation");
+
+		// TODO: creating presentation
+	}
 
 	$scope.thumbnails = [
 		{
@@ -102,5 +31,4 @@ app.controller('editorController', ['$scope', '$resource', 'slideCreator', funct
 		}
 	];
 
-	slideCreator.create("#presentation-window", doc.slides[0]);
 }]);
