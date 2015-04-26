@@ -7,11 +7,7 @@ app.service('restApiService', [ '$http', 'dbMockService', 'config', 'modes', '$q
 	}
 
 	function getSuccessResponse(data) {
-		return {
-			data : data,
-			success : true,
-			error : false
-		};
+		data : data
 	}
 
 	function getErrorResponse() {
@@ -89,13 +85,16 @@ app.service('restApiService', [ '$http', 'dbMockService', 'config', 'modes', '$q
 		},
 
 		createSlideshow : function(slideshow) {
-			return $http.post('/slideshows', slideshow);
+			return $http.put('/slideshows', slideshow);
 		},
 
 		deleteSlideshow : function(id) {
 			return $http.delete('/slideshows/' + id);
-		}
+		},
 
+		getSlideshow : function(id) {
+			return $http.get('/slideshows/' + id);
+		}
 	}
 
 	if(config.mode === modes.DEV) {

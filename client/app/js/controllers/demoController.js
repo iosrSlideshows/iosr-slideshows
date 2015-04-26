@@ -8,34 +8,26 @@ app.controller('demoController', ['$scope', '$log', 'restApiService', function($
 
 	function getSlideshows(){
 		restApiService.getSlideshows().then(function(response){
-			if(response.success){
-				$scope.slideshowsString = JSON.stringify(response.data ,null,"    ");
-				$scope.slideshows = response.data;
-			}
+			$scope.slideshowsString = JSON.stringify(response ,null,"    ");
+			$scope.slideshows = response;
 		});
 	}
 
 	$scope.createSlideshow = function(){
 		restApiService.createSlideshow($scope.newSlideBody).then(function(response){
-			if(response.success){
-				getSlideshows();
-			}
+			getSlideshows();
 		})
 	};
 
 	$scope.deleteSlideshow = function(){
 		restApiService.deleteSlideshow($scope.slideId).then(function(response){
-			if(response.success){
-				getSlideshows();
-			}
+			getSlideshows();
 		});
 	};
 
 	$scope.onSlideshowSelected = function(id){
 		restApiService.getSlideshow(id).then(function(response){
-			if(response.success){
-				$scope.selectedSlideshow = JSON.stringify(response.data);
-			}
+			$scope.selectedSlideshow = JSON.stringify(response);
 		});
 	}
 

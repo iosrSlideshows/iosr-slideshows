@@ -9,4 +9,8 @@ module.exports = {
 
 	Slideshow : makeModel(schemaDefinitions.slideshow),
 
+    Slide : makeModel(schemaDefinitions.slide),
+
+    User : makeModel(schemaDefinitions.user)
+
 }

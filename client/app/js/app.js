@@ -2,7 +2,7 @@
 
 var app = angular.module('slideshows', ['ui.router', 'ngResource']);
 
-app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($stateProvider, $urlRouterProvider, $httpProvider) {
 
     // default state
     $urlRouterProvider.otherwise("/");
@@ -27,6 +27,8 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
             templateUrl: "templates/demo.html",
             controller: "demoController"
         });
+
+    $httpProvider.interceptors.push('httpInterceptor');
 }]);
 
 app.constant('modes', {
@@ -35,7 +37,7 @@ app.constant('modes', {
 });
 
 app.constant('config', {
-    mode : 'DEV' //DEV - bez bazy / PROD
+    mode : 'PROD' //DEV - bez bazy / PROD
 });
 
 app.constant('httpStatusCode', {
@@ -46,4 +48,36 @@ app.constant('httpStatusCode', {
     NOT_FOUND : 404 
 });
 
+app.service('httpInterceptor', function($q, $rootScope, httpStatusCode) {
+
+    return {
+       'request': function(config) {
+            return config;
+        },
+
+        'requestError': function(rejection) {
+            return $q.reject(rejection);
+        },
+
+        'response': function(response) {
+            if(response.data.error){
+                $rootScope.$emit('dbError', response.data.error)
+                console.error('dbError: ' + response.data.error);
+                return $q.reject(response.data.error);
+            }
+            if(response.data.dbResult){
+                return response.data.dbResult;
+            }
+            return response;
+        },
+
+        'responseError': function(rejection) {
+            //do obsluzenia rozne rejection.code ???
+            $rootScope.$emit('serverError', rejection.data);
+            console.error('serverError: ' + rejection.data);
+            return $q.reject(rejection.data);
+        }
+    };
+  
+});
 
