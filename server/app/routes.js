@@ -38,7 +38,7 @@ module.exports = function(app, logger, passport){
 
 	app.get('/slideshows', isLoggedIn, function(req, res) {
 
-		model.Slideshow.find({author : req.user._id}, 'document_name', function(err, slideshows){
+		model.Slideshow.find({author : req.user.id}, 'document_name', function(err, slideshows){
 
 			res.json(prepareResponse(err, slideshows));
 
@@ -48,7 +48,7 @@ module.exports = function(app, logger, passport){
 
 	app.put('/slideshows', isLoggedIn, function(req, res) {
         var slideshowObj = req.body;
-        slideshowObj.author = req.user._id;
+        slideshowObj.author = req.user.id;
 
         var slidesArray = slideshowObj.slides;
         if(slidesArray && slidesArray.length !== 0){
@@ -74,7 +74,7 @@ module.exports = function(app, logger, passport){
 
 	app.delete('/slideshows/:slideshow_id', isLoggedIn, function(req, res){
 
-		model.Slideshow.remove({ _id : req.params.slideshow_id, author: req.user._id }, function(err, slide){
+		model.Slideshow.remove({ _id : req.params.slideshow_id, author: req.user.id }, function(err, slide){
 
             if(err) {
                 res.status(404).json(err.message);
@@ -88,7 +88,7 @@ module.exports = function(app, logger, passport){
 
 	app.get('/slideshows/:slideshow_id', isLoggedIn, function(req, res){
 
-		model.Slideshow.findOne({ _id : req.params.slideshow_id, author: req.user._id }).populate('slides').populate('content').exec(function(err, slide){
+		model.Slideshow.findOne({ _id : req.params.slideshow_id, author: req.user.id }).populate('slides').populate('content').exec(function(err, slide){
             if(err) {
                 res.status(404).json(err.message);
             } else {
