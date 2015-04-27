@@ -24,20 +24,21 @@ function createSlideshow(slideshowObj, res){
     });
 }
 
-function getUser(req) {
-    if(req.isAuthenticated()){
-        return req.user;
+
+function isLoggedIn(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
     }
-    return null;
+    res.redirect('/');
 }
 
 module.exports = function(app, logger, passport){
 
 	log = logger;
 
-	app.get('/slideshows', function(req, res) {
+	app.get('/slideshows', isLoggedIn, function(req, res) {
 
-		model.Slideshow.find({}, 'document_name', function(err, slideshows){
+		model.Slideshow.find({author : req.user._id}, 'document_name', function(err, slideshows){
 
 			res.json(prepareResponse(err, slideshows));
 
@@ -45,8 +46,9 @@ module.exports = function(app, logger, passport){
 			
 	})
 
-	app.put('/slideshows', function(req, res) {
+	app.put('/slideshows', isLoggedIn, function(req, res) {
         var slideshowObj = req.body;
+        slideshowObj.author = req.user._id;
 
         var slidesArray = slideshowObj.slides;
         if(slidesArray && slidesArray.length !== 0){
@@ -70,9 +72,9 @@ module.exports = function(app, logger, passport){
 
 	})
 
-	app.delete('/slideshows/:slideshow_id', function(req, res){
+	app.delete('/slideshows/:slideshow_id', isLoggedIn, function(req, res){
 
-		model.Slideshow.remove({ _id : req.params.slideshow_id }, function(err, slide){
+		model.Slideshow.remove({ _id : req.params.slideshow_id, author: req.user._id }, function(err, slide){
 
             if(err) {
                 res.status(404).json(err.message);
@@ -84,9 +86,9 @@ module.exports = function(app, logger, passport){
 
 	})
 
-	app.get('/slideshows/:slideshow_id', function(req, res){
+	app.get('/slideshows/:slideshow_id', isLoggedIn, function(req, res){
 
-		model.Slideshow.findOne({ _id : req.params.slideshow_id }).populate('slides').populate('content').exec(function(err, slide){
+		model.Slideshow.findOne({ _id : req.params.slideshow_id, author: req.user._id }).populate('slides').populate('content').exec(function(err, slide){
             if(err) {
                 res.status(404).json(err.message);
             } else {
@@ -100,17 +102,20 @@ module.exports = function(app, logger, passport){
 
     app.get('/auth/google/callback',
         passport.authenticate('google', {
-            successRedirect : '/#/login?success=true',
-            failureRedirect : '/#/login?success=false'
+            successRedirect : '/#',
+            failureRedirect : '/#'
         })
     );
 
-    app.get('/logout', function(req, res) {
+    app.get('/logout', isLoggedIn, function(req, res) {
         req.logout();
+        req.session.destroy();
+        res.clearCookie('connect.sid');
+        res.redirect('/#');
     });
 
     app.get('/profile', function(req, res) {
-        var user = getUser(req);
+        var user = req.user;
         if(user) {
             res.status(200).json(
                 {
@@ -118,7 +123,7 @@ module.exports = function(app, logger, passport){
                     email: user.email
                 });
         } else {
-            res.status(401).json("User not logged in");
+            res.status(204).json("User not logged in");
         }
     });
 

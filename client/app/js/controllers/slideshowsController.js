@@ -1,9 +1,13 @@
 var app = angular.module('slideshows');
 
-app.controller('slideshowsController', ['$scope', 'restApiService', function ($scope, restApiService) {
+app.controller('slideshowsController', ['$scope', 'authService', 'restApiService', function ($scope, authService, restApiService) {
 
-    restApiService.getSlideshows().then(function(response){
-        $scope.slideshows = response;
+    authService.initialize().then(function(){
+        restApiService.getSlideshows().then(function(slideshows){
+            $scope.slideshows = slideshows;
+        });
     });
+
+    $scope.slideshowInfo = {};
 
 }]);

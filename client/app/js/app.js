@@ -5,56 +5,34 @@ var app = angular.module('slideshows', ['ui.router', 'ngResource']);
 app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function($stateProvider, $urlRouterProvider, $httpProvider) {
 
     // default state
-    $urlRouterProvider.otherwise("/");
+    $urlRouterProvider.when("", "/slideshows");
+    $urlRouterProvider.when("/", "/slideshows");
+    $urlRouterProvider.otherwise("/slideshows");
 
     // states
     $stateProvider
-        .state('home', {
-            url: "/",
-            templateUrl: "templates/home.html"
+        .state('main', {
+            url: "",
+            views: {
+                'navbar': {
+                    templateUrl: 'templates/navigation.html',
+                    controller: 'slideshowsController'
+                }
+            }
         })
-        .state('login', {
-            url: "/login?success",
-            templateUrl: "templates/login.html",
-            controller: "loginController"
+        .state('main.slideshows', {
+            url: "/slideshows?documentId",
+            templateUrl: 'templates/editor.html',
+            controller: 'editorController'
         })
-        .state('slideshows', {
-            url: "/slideshows",
-            templateUrl: "templates/slideshows.html",
-            controller: "slideshowsController"
-        })
-        .state('slideshow', {
-            url: "/slideshow/{documentId}",
-            templateUrl: "templates/editor.html"
-        })
-        // TODO: this probably will be removed
-        .state('editor', {
-            url: "/editor",
-            templateUrl: "templates/editor.html"
-        })
-        .state('demo', {
-            url: "/demo",
-            templateUrl: "templates/demo.html",
-            controller: "demoController"
-        });
 
     $httpProvider.interceptors.push('httpInterceptor');
 }]);
-
-app.constant('modes', {
-    DEV : 'DEV',
-    PROD : 'PROD'
-});
-
-app.constant('config', {
-    mode : 'PROD' //DEV - bez bazy / PROD
-});
 
 app.constant('httpStatusCode', {
     SUCCESS : 200,
     CREATED : 201,
     NO_CONTENT : 204,
-
     UNAUTHORIZED : 401,
     NOT_FOUND : 404 
 });

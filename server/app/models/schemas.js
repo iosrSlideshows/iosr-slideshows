@@ -41,7 +41,7 @@ module.exports = {
 		name : 'Slideshow',
 		schema : new Schema({
 			document_name : {type: String, required:true},
-            author : String,
+            author : {type: Schema.ObjectId, ref: 'User', required: true},
             creation_date : {type: String, required:true},
             last_modification_date: {type: String},
             main_theme : String,

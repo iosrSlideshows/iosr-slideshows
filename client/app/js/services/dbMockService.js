@@ -1,24 +1,8 @@
 var app = angular.module('slideshows');
 
-app.service('dbMockService', [ '$http', 'config', 'modes', '$q', 'httpStatusCode', function($http, config, modes, $q, httpStatusCode){
+app.service('dbMockService', function(){
 
 	var slideshows = [
-		{ 
-			"_id": "55167e46e377e9360d000001", 
-			"__v": 0,
-			"document_name": "przepiekna prezentacja",
-		    "author": "Cool Guy",
-		    "version": 1,
-		    "creation_date": "2015-03-20 18:54",
-		    "last_modification_date": "2015-03-20 18:55",
-		    "main_theme" : "Theme1",
-		    "slides": []
-		}, 
-		{ 
-			"_id": "55167edde377e9360d000002", 
-			"document_name": "keke", 
-			"__v": 0 
-		}, 
 		{
 			"_id": "551a86e141fec5711b000001",
 			"document_name": "Testowa prezentacja",
@@ -115,8 +99,6 @@ app.service('dbMockService', [ '$http', 'config', 'modes', '$q', 'httpStatusCode
 	}
 
 	this.getSlideshowById = function(id){
-		var deferred = $q.defer();
-
 		var result = null;
 
 		for(var i = 0, len = slideshows.length; i < len ; i++){
@@ -125,14 +107,10 @@ app.service('dbMockService', [ '$http', 'config', 'modes', '$q', 'httpStatusCode
 			}
 		}
 
-		deferred.resolve(responsify(result, result === null ? httpStatusCode.NOT_FOUND : httpStatusCode.SUCCESS ));
-
-		return deferred.promise;
+        return result;
 	};
 
 	this.getSlideshows = function() {
-		var deferred = $q.defer();
-		
 		var result = [];
 		for(var i = 0, len = slideshows.length; i < len ; i++) {
 			var tmp = slideshows[i];
@@ -142,26 +120,17 @@ app.service('dbMockService', [ '$http', 'config', 'modes', '$q', 'httpStatusCode
 			}); 
 		}
 
-		deferred.resolve(responsify(result, httpStatusCode.SUCCESS ));
-		
-		return deferred.promise;
+        return result;
 	};
 
 	this.createSlideshow = function(slideshow) {
-		var deferred = $q.defer();
-
 		var toInsert = JSON.parse(angular.copy(slideshow));
 		toInsert._id = getId();
 		slideshows.push(toInsert);
-
-		deferred.resolve(responsify(toInsert, httpStatusCode.SUCCESS));
-
-		return deferred.promise;
+        return toInsert;
 	};
 
 	this.deleteSlideshow = function(id) {
-		var deferred = $q.defer();
-
 		var found = false;
 
 		for(var i = 0, len = slideshows.length; i < len ; i++){
@@ -172,16 +141,8 @@ app.service('dbMockService', [ '$http', 'config', 'modes', '$q', 'httpStatusCode
 			}
 		}
 
-		deferred.resolve(responsify(null, found ? httpStatusCode.SUCCESS : httpStatusCode.NOT_FOUND ));
-
-		return deferred.promise;
+        return found;
 	};
 
-	function responsify(data, httpStatusCode){
-		return {
-			data : data,
-			status : httpStatusCode
-		};
-	}
 
-}]);
+});

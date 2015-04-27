@@ -25,11 +25,11 @@ mongoose.connect(database.url, function(err){
 
 
 passport.serializeUser(function(user, done) {
-    done(null, user.id);
+    done(null, user._id);
 });
 
-passport.deserializeUser(function(id, done) {
-    model.User.findOne({'id' : id}, function(err, user) {
+passport.deserializeUser(function(_id, done) {
+    model.User.findOne({'_id' : _id}, function(err, user) {
         done(err, user);
     });
 });

@@ -4,25 +4,26 @@ app.service('authService', [ '$rootScope', 'restApiService', '$q', function($roo
 
     this.initialize = function(){
         var deferred = $q.defer();
-        restApiService.getUserProfile().then(function(response){
-            $rootScope.user = angular.copy(response.data);
+        if(!$rootScope.user) {
+            restApiService.getUserProfile().then(function (response) {
+                if(response.status === 200) {
+                    $rootScope.user = angular.copy(response.data);
+                    $rootScope.authenticated = true;
+                } else {
+                    $rootScope.user = null;
+                    $rootScope.authenticated = false;
+                }
+                deferred.resolve($rootScope.user);
+            });
+        } else {
+            $rootScope.authenticated = true;
             deferred.resolve($rootScope.user);
-        });
+        }
         return deferred.promise;
     }
-
-    this.logout = function() {
-        restApiService.logout().then(function(){
-            $rootScope.user = null;
-        })
-	};
 
     this.getUser = function() {
 		return $rootScope.user;
 	};
-
-    this.isAuthorized = function() {
-        return $rootScope.user;
-    }
 
 }]);
