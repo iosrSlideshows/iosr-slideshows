@@ -8,15 +8,29 @@
       {
         "name" : "Konrad Ciochoń"
       }
-    ],    
+    ],
     "dependencies" : {
       "express"    : "~4.7.2",
       "mongoose"   : "~3.6.2",
       "morgan"	 : "~1.2.2",
       "body-parser": "~1.5.2",
-      "method-override": "~2.1.2"
+      "method-override": "~2.1.2",
+      "passport" : "~0.1.17",
+      "passport-google-oauth" : "~0.1.5",
+      "express-session": "~1.0.0",
+      "cookie-parser": "~1.0.0",
+      "googleapis":"~2.0",
+      "promise":"~7.0",
+    },
+    "devDependencies": {
+      "mocha":"~1.4.0",
+      "should":"~3.3.2",
+      "sinon":"~1.14.1",
+      "supertest":"~1.0.1",
+      "istanbul":"0.3.13"
     },
     "scripts": {
-      "prestart": "npm install --verbose"
+      "prestart": "npm install --verbose",
+      "test": "istanbul cover _mocha -- -R spec; open coverage/lcov-report/index.html"
     }
   }

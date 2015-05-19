@@ -12,7 +12,8 @@
 	<link rel="stylesheet" href="css/app.css">
 </head>
 <body>
-	<div ui-view></div>
+
+    <div ui-view></div>
 
 	<script src="bower_components/angular/angular.js"></script>
 	<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
@@ -20,15 +21,18 @@
 	<script src="bower_components/jquery/dist/jquery.js"></script>
 	<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 	<script src="bower_components/Snap.svg/dist/snap.svg.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 
 	<script src="js/app.js"></script>
 
-	<script src="js/services/sessionService.js"></script>
+	<script src="js/services/authService.js"></script>
 	<script src="js/services/slideCreator.js"></script>
-	<script src="js/services/sliServerService.js"></script>
+	<script src="js/services/restApiService.js"></script>
+	<script src="js/services/dbMockService.js"></script>
 
-	<script src="js/controllers/loginController.js"></script>
 	<script src="js/controllers/editorController.js"></script>
-	<script src="js/controllers/demoController.js"></script>
+    <script src="js/controllers/slideshowsController.js"></script>
+    <script src="js/controllers/saveModalController.js"></script>
 </body>
 </html>

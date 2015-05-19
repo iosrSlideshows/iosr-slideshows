@@ -1,0 +1,25 @@
+<div class="modal-header">
+    <h3 class="modal-title">Saving</h3>
+</div>
+<div class="modal-body">
+
+    <input type="text" class="form-control" placeholder="Unsaved document" ng-model="newSavingConfig.name">
+
+    <br/>
+
+    <div class="btn-group">
+        <label class="btn btn-primary" ng-model="newSavingConfig.source" btn-radio="dataSource.LOCAL">Local</label>
+        <label ng-if="authenticated" class="btn btn-primary" ng-model="newSavingConfig.source" btn-radio="dataSource.DRIVE">Drive</label>
+        <label ng-if="authenticated" class="btn btn-primary" ng-model="newSavingConfig.source" btn-radio="dataSource.DB">Database</label>
+    </div>
+
+    <button ng-show="showOverwriteOption" type="button" class="btn btn-primary" ng-model="newSavingConfig.overwrite" btn-checkbox btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false">
+        Overwrite
+    </button>
+
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="ok()" ng-disabled="!newSavingConfig.name">Continue</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>

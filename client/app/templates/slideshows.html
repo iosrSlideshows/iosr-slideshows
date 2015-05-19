@@ -1,0 +1,22 @@
+<h1>Twoje prezentacje</h1>
+<h3>Local storage</h3>
+<ul>
+    <li ng-repeat="slideshow in slideshows[dataSource.LOCAL]">
+        <a ui-sref="app.slideshow({'documentId': '{{ slideshow._id }}', 'source': '{{ dataSource.LOCAL }}' })">{{ slideshow.document_name }}</a>
+        <button type="button" class="btn btn-default" ng-click="delete(slideshow._id, dataSource.LOCAL)">Delete</button>
+    </li>
+</ul>
+<h3>Database</h3>
+<ul>
+    <li ng-repeat="slideshow in slideshows[dataSource.DB]">
+        <a ui-sref="app.slideshow({'documentId': '{{ slideshow._id }}', 'source': '{{ dataSource.DB }}' })">{{ slideshow.document_name }}</a>
+        <button type="button" class="btn btn-default" ng-click="delete(slideshow._id, dataSource.DB)">Delete</button>
+    </li>
+</ul>
+<h3>Google drive</h3>
+<ul>
+    <li ng-repeat="slideshow in slideshows[dataSource.DRIVE]">
+        <a ui-sref="app.slideshow({'documentId': '{{ slideshow.fileId }}', 'source': '{{ dataSource.DRIVE }}' })">{{ slideshow.document_name }}</a>
+        <button type="button" class="btn btn-default" ng-click="delete(slideshow.fileId, dataSource.DRIVE)">Delete</button>
+    </li>
+</ul>

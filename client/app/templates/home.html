@@ -1,6 +1,7 @@
 <h1>Slideshows</h1>
 <ul>
-	<li><a ui-sref="login">Login</a></li>
-	<li><a ui-sref="editor">Editor</a></li>
-	<li><a ui-sref="demo">Demo</a></li>
+    <li ng-if="!user"><a href="/auth/google">Login</a></li>
+    <li ng-if="user">{{user.email}}&nbsp;<a href="/logout">Logout</a></li>
+    <li><a ui-sref="app.slideshows">My slideshows</a></li>
+    <li><a ui-sref="app.slideshow({ 'source': 'local' })">Editor</a></li>
 </ul>

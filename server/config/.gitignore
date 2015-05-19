@@ -1,1 +1,3 @@
-*.js
+/server_config.js
+/db_config.js
+/auth_config.js

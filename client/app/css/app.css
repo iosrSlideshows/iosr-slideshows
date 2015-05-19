@@ -16,4 +16,32 @@ div.thumbnail {
 	border-style: solid;
 	border-width: 1px;
 	border-color: #000;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+div.thumbnail:hover {
+    cursor : pointer
+}
+
+div.thumbnail.active {
+    border-color: #0051FF;
+    border-width: 4px;
+}
+
+div#thumbnails .btn.delete {
+    display: inline-block;
+    float: right;
+}
+
+div#thumbnails .btn.add {
+    width: 200px;
+}
+
+div .navbar-collapse .dropdown .dropdown-menu .action{
+    padding-left: 10px;
+}
+
+div .navbar-collapse .dropdown .dropdown-menu .action:hover{
+    cursor:pointer;
 }

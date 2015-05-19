@@ -1,0 +1,9 @@
+module.exports = {
+
+    clientID: '882422898806-t0tv9r3kcjls55nilfif2jpf2ifv4f3v.apps.googleusercontent.com',
+    clientSecret: 'zJML5yEUv1h-7WlgdnnUNenj',
+    callbackURL:  'http://localhost:8080/auth/google/callback'
+
+};
+
+
